@@ -68,7 +68,7 @@ public class SpawnController : MonoBehaviour
             }
         }
         
-        Debug.Log($"X: {xPos} Y: {yPos}");  
+        //Debug.Log($"X: {xPos} Y: {yPos}");  
         return new Vector2 (xPos, yPos);
     }
 
