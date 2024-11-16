@@ -23,7 +23,6 @@ public class PlayerController : MonoBehaviour
     private float _moveThreshold = .05f;
     #endregion
 
-    private bool _isInitialized = false;
 
     #region Properties
     public float MoveSpeed {  get { return _moveSpeed; } set { _moveSpeed = value; } }
@@ -34,7 +33,6 @@ public class PlayerController : MonoBehaviour
     public float CritMultiple {  get { return _critMultiple; } set {_critMultiple = value; } }
     public float Luck { get { return _luck; } set { _luck = value; } }
     public bool BaseMoveEnabled { get { return _baseMoveEnabled; } set { _baseMoveEnabled=value; } }
-    public bool IsInitialized { get { return _isInitialized; } set { _isInitialized = value; } } 
     #endregion
 
 
@@ -42,12 +40,14 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         InitializePlayer();
-        
     }
 
     private void Awake()
     {
-        PlayerManager.Instance.RegisterPlayer(this.gameObject);
+        // Utilize Preload manager to ensure that this exists.  The only way I've found that makes damn sure it's there.
+        // I do not understand if there's any other way that people can reliably ensure these are available at start and 
+        // awake time.
+        PlayerManager.Instance.RegisterPlayer(this.gameObject);  // Registering player on awake to make sure it's available to everyone
     }
 
     private void Update()
@@ -66,15 +66,9 @@ public class PlayerController : MonoBehaviour
 
     private void InitializePlayer()
     {
-        //while (PlayerManager.Instance == null) //waiting for PlayerManager Instance before assigning.
-        //{
-        //    yield return null;
-        //}
-        //PlayerManager.Instance.Player = this.gameObject; // needs reference to the player on start
-        playerRb = GetComponent<Rigidbody2D>();
+        playerRb = GetComponent<Rigidbody2D>(); 
         _pAnimator = GetComponentInChildren<Animator>();
         Debug.Log($"Movement: {_movement}, Velocity: {playerRb.linearVelocity}");
-        IsInitialized = true;
     }
 
     protected virtual void SetMovement()
@@ -155,9 +149,9 @@ public class PlayerController : MonoBehaviour
 
 
 
-    private void RespawnPlayer()
+    private void RespawnPlayer() // for respawning player after death.  Might need to be public.
     {
-        PlayerManager.Instance.RegisterPlayer(this.gameObject);
-        //PlayerManager.NotifyPlayerRespawn(this.gameObject);
+        // passing in the current player on respawn to the RegisterPlayer where it sets it equal to it's GameObject Player which is available anywhere
+        PlayerManager.Instance.RegisterPlayer(this.gameObject);  // Registering player to ensure everything that depends on it can run.
     }
 }

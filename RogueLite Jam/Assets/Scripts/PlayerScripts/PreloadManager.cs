@@ -10,6 +10,10 @@ public class PreloadManager : MonoBehaviour
             GameObject playerManager = new GameObject("PlayerManager");
             playerManager.AddComponent<PlayerManager>();
         }
+
+
+
+        Debug.Log("All Managers Preloaded");  // will make more sense once we have a few more in here.
     }
 
 }

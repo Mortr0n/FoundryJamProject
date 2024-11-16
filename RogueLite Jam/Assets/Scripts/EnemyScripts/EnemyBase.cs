@@ -37,9 +37,6 @@ public class EnemyBase : MonoBehaviour
     {
         //SetBaseStats();
         InitializeEnemy();
-
-        //FIXME: For testing!
-        //StartCoroutine(AttackWait());
     }
 
     private void Update()
@@ -58,13 +55,25 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
+    void OnEnable() // how an enemy subscribes to the OnPlayerRegistered event
+    {
+        PlayerManager.OnPlayerRegistered += UpdatePlayerReference;
+    }
+
+    void OnDisable()
+    {
+        PlayerManager.OnPlayerRegistered -= UpdatePlayerReference;
+    }
+
+    private void UpdatePlayerReference(GameObject player) //Updating the player object to the new player on registration
+    {
+        _playerObject = player;
+    }
+
     private void InitializeEnemy()
     {
-        // get player 
-        _playerObject = PlayerManager.Instance.Player;
-
-        // subscribe to player respawn event
-        //PlayerManager.OnPlayerRegistered += UpdatePlayerReference;
+        // get player first
+        _playerObject = PlayerManager.Instance.Player; //only garaunteed to be available due to preload manager!  See playercontroller adn playermanager
 
         // get for moving and animating
         thisRb = GetComponent<Rigidbody2D>();
@@ -157,20 +166,4 @@ public class EnemyBase : MonoBehaviour
         yield return new WaitForSeconds(AttackTimer);
         _attackingPlayer = false;
     }
-
-    void OnEnable()
-    {
-        PlayerManager.OnPlayerRegistered += UpdatePlayerReference;
-    }
-
-    void OnDisable()
-    {
-        PlayerManager.OnPlayerRegistered -= UpdatePlayerReference;
-    }
-
-    private void UpdatePlayerReference(GameObject player)
-    {
-        _playerObject = player;
-    }
-
 }

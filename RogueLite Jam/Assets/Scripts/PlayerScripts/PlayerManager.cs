@@ -7,7 +7,7 @@ public class PlayerManager : MonoBehaviour
     public GameObject Player {  get; set; }
     public static event Action<GameObject> OnPlayerRegistered;
 
-    private void Awake()
+    private void Awake() // can only garauntee this will work due to Preload manager.  probably my new fav way of ensuring static singletons work from now on.
     {
         if (Instance != null && Instance != this)
         {
@@ -21,20 +21,10 @@ public class PlayerManager : MonoBehaviour
 
     public void RegisterPlayer(GameObject player)
     {
-        
         Player = player;
         Debug.Log($"Player registered: {player.name}");
-        OnPlayerRegistered?.Invoke(player);
-        
-        //else
-        //{
-        //    Debug.LogWarning("Player already registered");
-        //}
+        // after it sets the Player GameObject then I invoke the event for OnPlayerRegistered which I have a function looking for it in the EnemyBase class
+        OnPlayerRegistered?.Invoke(player); 
     }
-    //public static void NotifyPlayerRespawn(GameObject player)
-    //{
-    //    Instance.Player = player;
-    //    OnPlayerRespawn?.Invoke(player);
-    //    Debug.Log($"PlayerManager updated with new player: {player.name}");
-    //}
+
 }
