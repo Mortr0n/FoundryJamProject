@@ -1,5 +1,5 @@
-using NUnit.Framework.Internal.Commands;
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _critChance = .05f;
     [SerializeField] private float _critMultiple = 1.5f;
     [SerializeField] private float _luck = .05f;
+
+    [SerializeField] private float _pForce = 1f;
     private bool _baseMoveEnabled = true;
     private bool _isMoving = false;
     private float _moveThreshold = .05f;
@@ -36,8 +38,8 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        playerRb = GetComponent<Rigidbody2D>();
-        _pAnimator = GetComponentInChildren<Animator>();
+        StartCoroutine(WaitToAssignPlayerInstance());
+        
     }
 
     private void Update()
@@ -54,6 +56,15 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    private IEnumerator WaitToAssignPlayerInstance()
+    {
+        yield return new WaitForSeconds(1f);
+        PlayerManager.Instance.Player = this.gameObject; // needs reference to the player on start
+        playerRb = GetComponent<Rigidbody2D>();
+        _pAnimator = GetComponentInChildren<Animator>();
+        Debug.Log($"Movement: {_movement}, Velocity: {playerRb.linearVelocity}");
+    }
+
     protected virtual void SetMovement()
     {
         float xMove = Input.GetAxis("Horizontal");
@@ -67,8 +78,12 @@ public class PlayerController : MonoBehaviour
 
     protected virtual void MovePlayer()
     {
-        playerRb.AddForce(_movement * _moveSpeed);
-        WalkAnimator();
+        if (playerRb != null)
+        {
+            playerRb.AddForce(_movement * _moveSpeed);
+            //playerRb.linearVelocity = _movement * _moveSpeed; //for testing.  do not use!
+            WalkAnimator();
+        }        
     }
 
     protected void WalkAnimator()
@@ -80,6 +95,15 @@ public class PlayerController : MonoBehaviour
         else
         {
             _pAnimator.SetBool("isMoving", true);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Vector2 pushForce = (transform.position - collision.transform.position).normalized * _pForce;
+        if (playerRb != null)
+        {
+            playerRb.AddForce(pushForce);
         }
     }
 
@@ -95,7 +119,7 @@ public class PlayerController : MonoBehaviour
             case ("physical"):
                 
                 modifiedAmount -= Defense;
-                Debug.Log($"physical attack damage modifiers modAmt: {modifiedAmount}");
+                Debug.Log($"physical attack damage modifiers modAmt: {modifiedAmount} amt: {amount} and def: {Defense}");
                 break;
             default:
                 Debug.LogError($"unsupported attack damage type [{damageType}]");
@@ -115,5 +139,13 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Player Die Now");
         throw new NotImplementedException();
+    }
+
+
+
+    private void RespawnPlayer()
+    {
+        PlayerManager.Instance.Player = this.gameObject;
+        PlayerManager.NotifyPlayerRespawn(this.gameObject);
     }
 }

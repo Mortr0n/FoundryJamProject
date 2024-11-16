@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3984394993020153813}
   - component: {fileID: 7754805943052004694}
   - component: {fileID: 2698145277718965093}
+  - component: {fileID: 4443497396154336666}
   m_Layer: 0
   m_Name: BaseEnemy
   m_TagString: Untagged
@@ -60,8 +61,8 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!70 &7754805943052004694
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -92,12 +93,12 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.15139987, y: -0.022899827}
-  m_Size: {x: 0.80279994, y: 0.5908409}
+  m_Offset: {x: 0.0082318755, y: -0.028644446}
+  m_Size: {x: 1.5190225, y: 1.2563126}
   m_Direction: 1
 --- !u!114 &2698145277718965093
 MonoBehaviour:
@@ -111,6 +112,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73e1292b9bb98ab459106c5170bf5756, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!58 &4443497396154336666
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1412321958996505095}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: ee203ab5bea88b0449a6a48c8d59786a, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.14791894, y: 0.028862268}
+  m_Radius: 0.32321832
 --- !u!1 &5623032848108793113
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using UnityEngine.Rendering.Universal;
 
 public class EnemyBase : MonoBehaviour
 {
-    private GameObject playerObject;
+    [SerializeField] private GameObject _playerObject;
     private Vector2 playerPos;
     private Rigidbody2D thisRb;
     private Animator eAnimator;
@@ -18,7 +18,7 @@ public class EnemyBase : MonoBehaviour
     private float _hitPercent = .5f;
 
     private bool _attackEnabled = true;
-    private float _attackTimer = .3f;
+    private float _attackTimer = .2f;
     private bool _chasePlayer = true;
     private bool _attackingPlayer = false;
 
@@ -36,13 +36,18 @@ public class EnemyBase : MonoBehaviour
     void Start()
     {
         SetBaseStats();
-        playerObject = GameObject.Find("Player");
-        thisRb = GetComponent<Rigidbody2D>();
-        eAnimator = GetComponentInChildren<Animator>();
-        Debug.Log($"Player: {playerObject != null}, thisRb: {thisRb != null}, eAnimator: { eAnimator != null}");
+        StartCoroutine(WaitToAssign());
 
         //FIXME: For testing!
         //StartCoroutine(AttackWait());
+    }
+
+    private void Update()
+    {
+        if (_playerObject == null)
+        {
+            FindPlayerObject();
+        }
     }
 
     void FixedUpdate()
@@ -51,9 +56,22 @@ public class EnemyBase : MonoBehaviour
         {
             MoveToPlayer();
         }
-
+        
     }
 
+    private IEnumerator WaitToAssign()
+    {
+        yield return new WaitForSeconds(.1f);
+        _playerObject = PlayerManager.Instance.Player;
+        thisRb = GetComponent<Rigidbody2D>();
+        eAnimator = GetComponentInChildren<Animator>();
+        Debug.Log($"Player: {_playerObject != null}, thisRb: {thisRb != null}, eAnimator: {eAnimator != null}");
+    }
+
+    private void FindPlayerObject()
+    {
+        _playerObject = PlayerManager.Instance.Player;
+    }
 
     public virtual void SetBaseStats()
     {
@@ -62,10 +80,12 @@ public class EnemyBase : MonoBehaviour
 
     public virtual void MoveToPlayer()
     {
-        playerPos = playerObject.transform.position;
+        playerPos = _playerObject.transform.position;
         Vector2 thisPos = new Vector2(transform.position.x, transform.position.y);
         Vector2 moveDirection = (playerPos - thisPos).normalized;
-        thisRb.AddForce(moveDirection * _moveSpeed);
+
+        //thisRb.AddForce(moveDirection * _moveSpeed); adding force which causes them to fly right by
+        thisRb.linearVelocity = moveDirection * _moveSpeed;
 
         if (thisRb.linearVelocity.magnitude > 0)
         {
@@ -96,10 +116,10 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log($"Collision: {collision.gameObject.tag} and {collision.gameObject.name}");
-        if (collision.gameObject.tag == "Player" || collision.gameObject.name == "Player")
+        Debug.Log($"Collision: {collision.transform.root.tag} and {collision.gameObject.name}");
+        if (collision.transform.root.tag == "Player" || collision.gameObject.name == "Player")
         {
             if (!_attackingPlayer)
             {
@@ -110,13 +130,23 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Vector2 repulsion = transform.position -collision.transform.position;
+        //Debug.Log($"Repulsion: {repulsion}");
+        thisRb.AddForce(repulsion.normalized * 1f);
+    }
+
     public virtual void Attack1(string attackCall)
     {
         //TODO: this won't work I'll need to fire on connection with player so on trigger entered and then call the attack timer, but let's test this first
-        Debug.Log("Attacking player");  
-        PlayerController pController = playerObject.GetComponent<PlayerController>();
-        pController.DamagePlayer(BaseDamage, "physical");
-        eAnimator.SetTrigger(attackCall);
+        Debug.Log("Attacking player");
+        if (_playerObject != null)
+        {
+            PlayerController pController = _playerObject.GetComponent<PlayerController>();
+            pController.DamagePlayer(BaseDamage, "physical");
+            eAnimator.SetTrigger(attackCall);
+        }
     }
 
     private IEnumerator AttackWait()
@@ -125,6 +155,21 @@ public class EnemyBase : MonoBehaviour
         _attackingPlayer = true;
         yield return new WaitForSeconds(AttackTimer);
         _attackingPlayer = false;
+    }
+
+    void OnEnable()
+    {
+        PlayerManager.OnPlayerRespawn += UpdatePlayerReference;
+    }
+
+    void OnDisable()
+    {
+        PlayerManager.OnPlayerRespawn -= UpdatePlayerReference;
+    }
+
+    private void UpdatePlayerReference(GameObject player)
+    {
+        _playerObject = player;
     }
 
 }

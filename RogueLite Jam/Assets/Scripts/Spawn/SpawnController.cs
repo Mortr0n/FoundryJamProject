@@ -17,7 +17,8 @@ public class SpawnController : MonoBehaviour
 
     void Start()
     {
-        playerObj = GameObject.Find("Player");
+        //playerObj = GameObject.Find("Player");
+        StartCoroutine(WaitForPlayerInstance());
         StartCoroutine(SpawnTimer());
     }
 
@@ -29,7 +30,17 @@ public class SpawnController : MonoBehaviour
 
     public Vector2 GetPlayerPos()
     {
-        return playerObj.transform.position;
+        if (playerObj != null)
+        {
+            return playerObj.transform.position;
+        }
+        return new Vector2(0, 0);
+    }
+
+    private IEnumerator WaitForPlayerInstance()
+    {
+        yield return new WaitForSeconds(1f);
+        playerObj = PlayerManager.Instance.Player;
     }
 
     public Vector2 GenRandomSpawnPos()
