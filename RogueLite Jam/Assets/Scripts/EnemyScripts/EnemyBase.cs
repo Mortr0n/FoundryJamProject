@@ -35,8 +35,8 @@ public class EnemyBase : MonoBehaviour
 
     void Start()
     {
-        SetBaseStats();
-        StartCoroutine(WaitToAssign());
+        //SetBaseStats();
+        InitializeEnemy();
 
         //FIXME: For testing!
         //StartCoroutine(AttackWait());
@@ -46,40 +46,37 @@ public class EnemyBase : MonoBehaviour
     {
         if (_playerObject == null)
         {
-            FindPlayerObject();
+            _playerObject = PlayerManager.Instance?.Player;
         }
     }
 
     void FixedUpdate()
     {
-        if (_chasePlayer)
+        if (_chasePlayer && _playerObject != null)
         {
             MoveToPlayer();
         }
-        
     }
 
-    private IEnumerator WaitToAssign()
+    private void InitializeEnemy()
     {
-        yield return new WaitForSeconds(.1f);
+        // get player 
         _playerObject = PlayerManager.Instance.Player;
+
+        // subscribe to player respawn event
+        //PlayerManager.OnPlayerRegistered += UpdatePlayerReference;
+
+        // get for moving and animating
         thisRb = GetComponent<Rigidbody2D>();
         eAnimator = GetComponentInChildren<Animator>();
+        
         Debug.Log($"Player: {_playerObject != null}, thisRb: {thisRb != null}, eAnimator: {eAnimator != null}");
-    }
-
-    private void FindPlayerObject()
-    {
-        _playerObject = PlayerManager.Instance.Player;
-    }
-
-    public virtual void SetBaseStats()
-    {
-        Debug.Log("Implement Set Base Stats");
     }
 
     public virtual void MoveToPlayer()
     {
+        if (_playerObject == null) return;
+
         playerPos = _playerObject.transform.position;
         Vector2 thisPos = new Vector2(transform.position.x, transform.position.y);
         Vector2 moveDirection = (playerPos - thisPos).normalized;
@@ -95,11 +92,12 @@ public class EnemyBase : MonoBehaviour
         {
             eAnimator.SetBool("isMoving", false);
         }
-
     }
 
     public virtual void BaseAttack(int number)
     {
+        if (_playerObject == null) return;
+
         string attackCall = "attack" + (number).ToString();
         Debug.Log($"attack call : {attackCall}");
         switch (attackCall)
@@ -134,7 +132,10 @@ public class EnemyBase : MonoBehaviour
     {
         Vector2 repulsion = transform.position -collision.transform.position;
         //Debug.Log($"Repulsion: {repulsion}");
-        thisRb.AddForce(repulsion.normalized * 1f);
+        if (thisRb != null)
+        {
+            thisRb.AddForce(repulsion.normalized * 1f);
+        }
     }
 
     public virtual void Attack1(string attackCall)
@@ -159,12 +160,12 @@ public class EnemyBase : MonoBehaviour
 
     void OnEnable()
     {
-        PlayerManager.OnPlayerRespawn += UpdatePlayerReference;
+        PlayerManager.OnPlayerRegistered += UpdatePlayerReference;
     }
 
     void OnDisable()
     {
-        PlayerManager.OnPlayerRespawn -= UpdatePlayerReference;
+        PlayerManager.OnPlayerRegistered -= UpdatePlayerReference;
     }
 
     private void UpdatePlayerReference(GameObject player)

@@ -3,20 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\cmsl4\\Documents\\FoundryJam\\RogueLite Jam\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1CCB3195-8596-B146-ED7B-66E9033606F9}|Assembly-CSharp.csproj|C:\\Users\\cmsl4\\Documents\\FoundryJam\\RogueLite Jam\\assets\\scripts\\spawn\\spawncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1CCB3195-8596-B146-ED7B-66E9033606F9}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\spawn\\spawncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1CCB3195-8596-B146-ED7B-66E9033606F9}|Assembly-CSharp.csproj|C:\\Users\\cmsl4\\Documents\\FoundryJam\\RogueLite Jam\\assets\\scripts\\playerscripts\\playermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CCB3195-8596-B146-ED7B-66E9033606F9}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playerscripts\\playermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1CCB3195-8596-B146-ED7B-66E9033606F9}|Assembly-CSharp.csproj|C:\\Users\\cmsl4\\Documents\\FoundryJam\\RogueLite Jam\\assets\\scripts\\playerscripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1CCB3195-8596-B146-ED7B-66E9033606F9}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playerscripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1CCB3195-8596-B146-ED7B-66E9033606F9}|Assembly-CSharp.csproj|c:\\users\\cmsl4\\documents\\foundryjam\\roguelite jam\\assets\\scripts\\playerscripts\\preloadmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CCB3195-8596-B146-ED7B-66E9033606F9}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playerscripts\\preloadmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1CCB3195-8596-B146-ED7B-66E9033606F9}|Assembly-CSharp.csproj|c:\\users\\cmsl4\\documents\\foundryjam\\roguelite jam\\assets\\scripts\\enemyscripts\\enemybase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1CCB3195-8596-B146-ED7B-66E9033606F9}|Assembly-CSharp.csproj|C:\\Users\\cmsl4\\Documents\\FoundryJam\\RogueLite Jam\\assets\\scripts\\enemyscripts\\enemybase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1CCB3195-8596-B146-ED7B-66E9033606F9}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\enemyscripts\\enemybase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1CCB3195-8596-B146-ED7B-66E9033606F9}|Assembly-CSharp.csproj|c:\\users\\cmsl4\\documents\\foundryjam\\roguelite jam\\assets\\scripts\\playerscripts\\playermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1CCB3195-8596-B146-ED7B-66E9033606F9}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playerscripts\\playermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1CCB3195-8596-B146-ED7B-66E9033606F9}|Assembly-CSharp.csproj|c:\\users\\cmsl4\\documents\\foundryjam\\roguelite jam\\assets\\scripts\\playerscripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CCB3195-8596-B146-ED7B-66E9033606F9}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playerscripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CCB3195-8596-B146-ED7B-66E9033606F9}|Assembly-CSharp.csproj|C:\\Users\\cmsl4\\Documents\\FoundryJam\\RogueLite Jam\\assets\\scripts\\spawn\\spawncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CCB3195-8596-B146-ED7B-66E9033606F9}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\spawn\\spawncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,17 +30,30 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
+              "Title": "PreloadManager.cs",
+              "DocumentMoniker": "C:\\Users\\cmsl4\\Documents\\FoundryJam\\RogueLite Jam\\Assets\\Scripts\\PlayerScripts\\PreloadManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerScripts\\PreloadManager.cs",
+              "ToolTip": "C:\\Users\\cmsl4\\Documents\\FoundryJam\\RogueLite Jam\\Assets\\Scripts\\PlayerScripts\\PreloadManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\PlayerScripts\\PreloadManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-16T17:12:21.816Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "PlayerManager.cs",
               "DocumentMoniker": "C:\\Users\\cmsl4\\Documents\\FoundryJam\\RogueLite Jam\\Assets\\Scripts\\PlayerScripts\\PlayerManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerScripts\\PlayerManager.cs",
               "ToolTip": "C:\\Users\\cmsl4\\Documents\\FoundryJam\\RogueLite Jam\\Assets\\Scripts\\PlayerScripts\\PlayerManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\PlayerScripts\\PlayerManager.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-16T04:01:47.321Z",
               "EditorCaption": ""
@@ -49,33 +66,32 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\EnemyScripts\\EnemyBase.cs",
               "ToolTip": "C:\\Users\\cmsl4\\Documents\\FoundryJam\\RogueLite Jam\\Assets\\Scripts\\EnemyScripts\\EnemyBase.cs",
               "RelativeToolTip": "Assets\\Scripts\\EnemyScripts\\EnemyBase.cs",
-              "ViewState": "AgIAAC4AAAAAAAAAAAAAwFIAAAA1AAAAAAAAAA==",
+              "ViewState": "AgIAABkAAAAAAAAAAAAIwLAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-13T03:23:21.326Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "SpawnController.cs",
               "DocumentMoniker": "C:\\Users\\cmsl4\\Documents\\FoundryJam\\RogueLite Jam\\Assets\\Scripts\\Spawn\\SpawnController.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Spawn\\SpawnController.cs",
               "ToolTip": "C:\\Users\\cmsl4\\Documents\\FoundryJam\\RogueLite Jam\\Assets\\Scripts\\Spawn\\SpawnController.cs",
               "RelativeToolTip": "Assets\\Scripts\\Spawn\\SpawnController.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAmwCQAAAAhAAAAAAAAAA==",
+              "ViewState": "AgIAABsAAAAAAAAAAAAowCkAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-13T02:31:47.283Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-13T02:31:47.283Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "PlayerController.cs",
               "DocumentMoniker": "C:\\Users\\cmsl4\\Documents\\FoundryJam\\RogueLite Jam\\Assets\\Scripts\\PlayerScripts\\PlayerController.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerScripts\\PlayerController.cs",
               "ToolTip": "C:\\Users\\cmsl4\\Documents\\FoundryJam\\RogueLite Jam\\Assets\\Scripts\\PlayerScripts\\PlayerController.cs",
               "RelativeToolTip": "Assets\\Scripts\\PlayerScripts\\PlayerController.cs",
-              "ViewState": "AgIAACYAAAAAAAAAAAAAwGoAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAACEAAAAAAAAAAAAywDEAAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-13T02:04:19.148Z",
               "EditorCaption": ""

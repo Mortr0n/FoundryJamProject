@@ -39,7 +39,10 @@ public class SpawnController : MonoBehaviour
 
     private IEnumerator WaitForPlayerInstance()
     {
-        yield return new WaitForSeconds(1f);
+        while (PlayerManager.Instance == null) //waiting for PlayerManager Instance before assigning.
+        {
+            yield return null; 
+        }
         playerObj = PlayerManager.Instance.Player;
     }
 

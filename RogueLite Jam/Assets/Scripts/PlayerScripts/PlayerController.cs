@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     private float _moveThreshold = .05f;
     #endregion
 
+    private bool _isInitialized = false;
+
     #region Properties
     public float MoveSpeed {  get { return _moveSpeed; } set { _moveSpeed = value; } }
     public float Health { get { return _health; } set { _health = value; } }
@@ -32,14 +34,20 @@ public class PlayerController : MonoBehaviour
     public float CritMultiple {  get { return _critMultiple; } set {_critMultiple = value; } }
     public float Luck { get { return _luck; } set { _luck = value; } }
     public bool BaseMoveEnabled { get { return _baseMoveEnabled; } set { _baseMoveEnabled=value; } }
+    public bool IsInitialized { get { return _isInitialized; } set { _isInitialized = value; } } 
     #endregion
 
 
 
     private void Start()
     {
-        StartCoroutine(WaitToAssignPlayerInstance());
+        InitializePlayer();
         
+    }
+
+    private void Awake()
+    {
+        PlayerManager.Instance.RegisterPlayer(this.gameObject);
     }
 
     private void Update()
@@ -56,13 +64,17 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    private IEnumerator WaitToAssignPlayerInstance()
+    private void InitializePlayer()
     {
-        yield return new WaitForSeconds(1f);
-        PlayerManager.Instance.Player = this.gameObject; // needs reference to the player on start
+        //while (PlayerManager.Instance == null) //waiting for PlayerManager Instance before assigning.
+        //{
+        //    yield return null;
+        //}
+        //PlayerManager.Instance.Player = this.gameObject; // needs reference to the player on start
         playerRb = GetComponent<Rigidbody2D>();
         _pAnimator = GetComponentInChildren<Animator>();
         Debug.Log($"Movement: {_movement}, Velocity: {playerRb.linearVelocity}");
+        IsInitialized = true;
     }
 
     protected virtual void SetMovement()
@@ -145,7 +157,7 @@ public class PlayerController : MonoBehaviour
 
     private void RespawnPlayer()
     {
-        PlayerManager.Instance.Player = this.gameObject;
-        PlayerManager.NotifyPlayerRespawn(this.gameObject);
+        PlayerManager.Instance.RegisterPlayer(this.gameObject);
+        //PlayerManager.NotifyPlayerRespawn(this.gameObject);
     }
 }
