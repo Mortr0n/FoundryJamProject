@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, ICombatEntity
 {
     private Rigidbody2D playerRb;
     private Vector2 _movement;
@@ -113,16 +113,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void DamagePlayer(float amount, string damageType)
+    public void TakeDamage(float amount, DamageType damageType)
     {
         float modifiedAmount = amount;
         //TODO: ok so in here we can do the math for the defense and armor and magic protection if it's a magic attack.  Maybe I'll put a string for what kind of attack or whatever
         switch(damageType)
         {
-            case ("magic"):
+            case (DamageType.Magic):
                 Debug.Log("magic attack damage modifiers");
                 break;
-            case ("physical"):
+            case (DamageType.Physical):
                 
                 modifiedAmount -= Defense;
                 Debug.Log($"physical attack damage modifiers modAmt: {modifiedAmount} amt: {amount} and def: {Defense}");

@@ -16,6 +16,7 @@ public class EnemyBase : MonoBehaviour
     private float _defense = 5f;
     private float _critChance = .05f;
     private float _hitPercent = .5f;
+    private DamageType _damageType = DamageType.Physical;
 
     private bool _attackEnabled = true;
     private float _attackTimer = .2f;
@@ -154,7 +155,7 @@ public class EnemyBase : MonoBehaviour
         if (_playerObject != null)
         {
             PlayerController pController = _playerObject.GetComponent<PlayerController>();
-            pController.DamagePlayer(BaseDamage, "physical");
+            pController.TakeDamage(BaseDamage, _damageType);
             eAnimator.SetTrigger(attackCall);
         }
     }
