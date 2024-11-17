@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour, ICombatEntity
     private float _moveThreshold = .05f;
     #endregion
     private List<Weapon> _weapons = new List<Weapon>();
+    [SerializeField] private GameObject magicProjectilePrefab;
 
     #region Properties
     public float MoveSpeed {  get { return _moveSpeed; } set { _moveSpeed = value; } }
@@ -80,11 +81,33 @@ public class PlayerController : MonoBehaviour, ICombatEntity
         playerRb = GetComponent<Rigidbody2D>(); 
         _pAnimator = GetComponentInChildren<Animator>();
         Debug.Log($"Movement: {_movement}, Velocity: {playerRb.linearVelocity}");
-        EquipWeapon(new MagicProjectile());
+        if (magicProjectilePrefab == null)
+        {
+            Debug.LogError("Magic projectile prefab is not assigned!");
+            return;
+        }
+
+        // Instantiate the MagicProjectile prefab and initialize it
+        GameObject weaponGO = Instantiate(magicProjectilePrefab, transform.position, Quaternion.identity);
+        Weapon weapon = weaponGO.GetComponent<Weapon>();
+
+        if (weapon != null)
+        {
+            EquipWeapon(weapon);
+        }
+        else
+        {
+            Debug.LogError("Magic projectile prefab does not have a Weapon script!");
+        }
     }
 
     private void EquipWeapon(Weapon weapon)
     {
+        if (weapon == null)
+        {
+            Debug.LogError("Weapon is null!");
+            return;
+        }
         weapon.Initialize(this, attackPower: 5f, cooldown: 1f, range: 10f, damageType: DamageType.Magic);
         _weapons.Add(weapon);
     }

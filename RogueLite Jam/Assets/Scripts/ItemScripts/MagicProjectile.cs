@@ -2,22 +2,39 @@ using UnityEngine;
 
 public class MagicProjectile : Weapon
 {
-    [SerializeField] private GameObject _projectilePrefab;
+    private GameObject _target;
+    private float _speed = 10f;
 
-    public override void Attack(GameObject target)
+    public void Initialize(GameObject target, ICombatEntity owner)
     {
-        if (_projectilePrefab == null)
+        Owner = owner; // Set the weapon's owner (e.g., player)
+        _target = target; // Set the projectile's target
+    }
+
+    private void Update()
+    {
+        if (_target == null)
         {
-            Debug.LogError("projectile prefab is not assigned");
+            Destroy(gameObject); // Destroy the projectile if the target is gone
             return;
         }
 
-        GameObject projectile = Instantiate(_projectilePrefab, transform.position, Quaternion.identity) as GameObject;
+        // Move toward the target
+        transform.position = Vector2.MoveTowards(transform.position, _target.transform.position, _speed * Time.deltaTime);
 
-        MagicProjectile projectileController = projectile.GetComponent<MagicProjectile>();
-        if (projectileController != null)
+        // Check if close enough to hit
+        if (Vector2.Distance(transform.position, _target.transform.position) < 0.1f)
         {
-            projectileController.Initialize(Owner, 15f, 1.5f, 10f, DamageType.Magic);
+            Attack(_target); // Call the Attack method from Weapon
+            Destroy(gameObject); // Destroy the projectile after attacking
         }
+    }
+
+    public override void Attack(GameObject target)
+    {
+        
+            Attack(target);
+            
+        
     }
 }

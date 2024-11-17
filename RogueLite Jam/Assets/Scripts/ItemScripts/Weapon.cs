@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
 {
-    protected ICombatEntity Owner { get; private set; }
+    protected ICombatEntity Owner { get;  set; }
 
     private float _range = 5f;
     private float _cooldown = 1f;
@@ -32,6 +32,7 @@ public abstract class Weapon : MonoBehaviour
 
     public IEnumerator AutoAttack()
     {
+        Debug.Log("running autoattack");
         GameObject target = GetTarget(_targetType);
         if (target != null)
         {

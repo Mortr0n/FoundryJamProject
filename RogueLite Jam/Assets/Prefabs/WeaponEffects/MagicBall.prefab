@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1817983581203601190}
   - component: {fileID: 452620242174920317}
   - component: {fileID: 2250246976093082709}
+  - component: {fileID: 9125358642374988958}
   m_Layer: 0
   m_Name: MagicBall
   m_TagString: Untagged
@@ -110,3 +111,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &9125358642374988958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6188467187779054369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1266854b5e102eb49933c49dd738bb07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
