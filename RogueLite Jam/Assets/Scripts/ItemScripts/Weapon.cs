@@ -15,7 +15,7 @@ public abstract class Weapon : MonoBehaviour
 
     
 
-    public void Initialize(ICombatEntity owner, float attackPower, float cooldown, float range, DamageType damageType)
+    public virtual void Initialize(ICombatEntity owner, float attackPower, float cooldown, float range, DamageType damageType)
     {
         Owner = owner;
         _range = range;

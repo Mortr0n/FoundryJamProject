@@ -1,5 +1,7 @@
+using NUnit.Framework;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, ICombatEntity
@@ -22,7 +24,7 @@ public class PlayerController : MonoBehaviour, ICombatEntity
     private bool _isMoving = false;
     private float _moveThreshold = .05f;
     #endregion
-
+    private List<Weapon> _weapons = new List<Weapon>();
 
     #region Properties
     public float MoveSpeed {  get { return _moveSpeed; } set { _moveSpeed = value; } }
@@ -53,6 +55,15 @@ public class PlayerController : MonoBehaviour, ICombatEntity
     private void Update()
     {
         SetMovement();
+        foreach (var weapon in _weapons)
+        {
+            GameObject target = weapon.GetTarget(TargetType.Closest);
+            if (target != null)
+            {
+                weapon.Attack(target);
+            }
+            
+        }
     }
 
     private void FixedUpdate()
@@ -69,6 +80,13 @@ public class PlayerController : MonoBehaviour, ICombatEntity
         playerRb = GetComponent<Rigidbody2D>(); 
         _pAnimator = GetComponentInChildren<Animator>();
         Debug.Log($"Movement: {_movement}, Velocity: {playerRb.linearVelocity}");
+        EquipWeapon(new MagicProjectile());
+    }
+
+    private void EquipWeapon(Weapon weapon)
+    {
+        weapon.Initialize(this, attackPower: 5f, cooldown: 1f, range: 10f, damageType: DamageType.Magic);
+        _weapons.Add(weapon);
     }
 
     protected virtual void SetMovement()

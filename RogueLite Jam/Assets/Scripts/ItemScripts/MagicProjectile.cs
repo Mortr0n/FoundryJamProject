@@ -1,16 +1,23 @@
 using UnityEngine;
 
-public class MagicProjectile : MonoBehaviour
+public class MagicProjectile : Weapon
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] private GameObject _projectilePrefab;
 
-    // Update is called once per frame
-    void Update()
+    public override void Attack(GameObject target)
     {
-        
+        if (_projectilePrefab == null)
+        {
+            Debug.LogError("projectile prefab is not assigned");
+            return;
+        }
+
+        GameObject projectile = Instantiate(_projectilePrefab, transform.position, Quaternion.identity) as GameObject;
+
+        MagicProjectile projectileController = projectile.GetComponent<MagicProjectile>();
+        if (projectileController != null)
+        {
+            projectileController.Initialize(Owner, 15f, 1.5f, 10f, DamageType.Magic);
+        }
     }
 }
