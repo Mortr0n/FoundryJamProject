@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour, ICombatEntity
     private Vector2 _movement;
     private Animator _pAnimator;
 
+    [SerializeField] private Transform firePoint;
+
     #region Player Stats
     [SerializeField] private float _moveSpeed = 22f;
     [SerializeField] private float _health = 100f;
@@ -24,8 +26,8 @@ public class PlayerController : MonoBehaviour, ICombatEntity
     private bool _isMoving = false;
     private float _moveThreshold = .05f;
     #endregion
-    private List<Weapon> _weapons = new List<Weapon>();
-    [SerializeField] private GameObject magicProjectilePrefab;
+    [SerializeField] private List<Weapon> _weapons = new List<Weapon>();
+    [SerializeField] private GameObject magicBallWeapPrefab;
 
     #region Properties
     public float MoveSpeed {  get { return _moveSpeed; } set { _moveSpeed = value; } }
@@ -56,15 +58,15 @@ public class PlayerController : MonoBehaviour, ICombatEntity
     private void Update()
     {
         SetMovement();
-        foreach (var weapon in _weapons)
-        {
-            GameObject target = weapon.GetTarget(TargetType.Closest);
-            if (target != null)
-            {
-                weapon.Attack(target);
-            }
+        //foreach (var weapon in _weapons)
+        //{
+        //    GameObject target = weapon.GetTarget(TargetType.Closest);
+        //    if (target != null)
+        //    {
+        //        weapon.Attack(target);
+        //    }
             
-        }
+        //}
     }
 
     private void FixedUpdate()
@@ -81,23 +83,23 @@ public class PlayerController : MonoBehaviour, ICombatEntity
         playerRb = GetComponent<Rigidbody2D>(); 
         _pAnimator = GetComponentInChildren<Animator>();
         Debug.Log($"Movement: {_movement}, Velocity: {playerRb.linearVelocity}");
-        if (magicProjectilePrefab == null)
-        {
-            Debug.LogError("Magic projectile prefab is not assigned!");
-            return;
-        }
 
-        // Instantiate the MagicProjectile prefab and initialize it
-        GameObject weaponGO = Instantiate(magicProjectilePrefab, transform.position, Quaternion.identity);
-        Weapon weapon = weaponGO.GetComponent<Weapon>();
 
-        if (weapon != null)
+        Weapon mBallWeap = null;
+        //GameObject magicBallInstance = Instantiate(magicBallWeapPrefab, transform);
+       
+        
+        mBallWeap =  GetComponentInChildren<Weapon>();
+        //Debug.Log($"magic ball {mBallWeap} {mBallWeap.name}");
+
+        if (mBallWeap != null)
         {
-            EquipWeapon(weapon);
+            //Debug.Log($"Equipping Weapon {mBallWeap}");
+            EquipWeapon(mBallWeap);
         }
         else
         {
-            Debug.LogError("Magic projectile prefab does not have a Weapon script!");
+            Debug.LogError("mball not in the house!");
         }
     }
 
@@ -108,7 +110,8 @@ public class PlayerController : MonoBehaviour, ICombatEntity
             Debug.LogError("Weapon is null!");
             return;
         }
-        weapon.Initialize(this, attackPower: 5f, cooldown: 1f, range: 10f, damageType: DamageType.Magic);
+
+        weapon.Equip();
         _weapons.Add(weapon);
     }
 

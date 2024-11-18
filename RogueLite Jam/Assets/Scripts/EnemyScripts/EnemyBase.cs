@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class EnemyBase : MonoBehaviour
+public class EnemyBase : MonoBehaviour, ICombatEntity
 {
     [SerializeField] private GameObject _playerObject;
     private Vector2 playerPos;
@@ -12,9 +12,10 @@ public class EnemyBase : MonoBehaviour
 
     private float _moveSpeed = 2f;
     private float _baseDamage = 5f;
-    private float _maxHealth = 100f;
+    private float _maxHealth = 15;
     private float _defense = 5f;
     private float _critChance = .05f;
+    private float _critMultiple = .5f;
     private float _hitPercent = .5f;
     private DamageType _damageType = DamageType.Physical;
 
@@ -26,9 +27,10 @@ public class EnemyBase : MonoBehaviour
 
     public float MoveSpeed { get { return _moveSpeed; } set { _moveSpeed = value; } }
     public float BaseDamage { get { return _baseDamage; } set { _baseDamage = value; } }
-    public float MaxHealth { get { return _maxHealth; } set { _maxHealth = value; } }
+    public float Health { get { return _maxHealth; } set { _maxHealth = value; } }
     public float Defense { get { return _defense; } set { _defense = value; } }
     public float CritChance { get { return _critChance; } set { _critChance = value; } }
+    public float CritMultiple { get { return _critMultiple; } set { _critMultiple = value; } }
     public float HitPercent { get { return _hitPercent; } set { _hitPercent = value; } }
     public bool AttackEnabled { get { return _attackEnabled; } set { _attackEnabled = value; } }
     public float AttackTimer { get { return _attackTimer; } set { _attackTimer = value; } }
@@ -109,7 +111,7 @@ public class EnemyBase : MonoBehaviour
         if (_playerObject == null) return;
 
         string attackCall = "attack" + (number).ToString();
-        Debug.Log($"attack call : {attackCall}");
+        //Debug.Log($"attack call : {attackCall}");
         switch (attackCall)
         {
             case ("attack1"):
@@ -126,7 +128,7 @@ public class EnemyBase : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log($"Collision: {collision.transform.root.tag} and {collision.gameObject.name}");
+        //Debug.Log($"Collision: {collision.transform.root.tag} and {collision.gameObject.name}");
         if (collision.transform.root.tag == "Player" || collision.gameObject.name == "Player")
         {
             if (!_attackingPlayer)
@@ -151,7 +153,7 @@ public class EnemyBase : MonoBehaviour
     public virtual void Attack1(string attackCall)
     {
         //TODO: this won't work I'll need to fire on connection with player so on trigger entered and then call the attack timer, but let's test this first
-        Debug.Log("Attacking player");
+        //Debug.Log("Attacking player");
         if (_playerObject != null)
         {
             PlayerController pController = _playerObject.GetComponent<PlayerController>();
@@ -166,5 +168,16 @@ public class EnemyBase : MonoBehaviour
         _attackingPlayer = true;
         yield return new WaitForSeconds(AttackTimer);
         _attackingPlayer = false;
+    }
+
+    public void TakeDamage(float amount, DamageType type)
+    {
+        Health -= amount;
+        Debug.Log($"Take Damage called on enemy health at {Health}");
+        if (Health < 0 )
+        {
+            Destroy(gameObject);
+        }
+        
     }
 }
