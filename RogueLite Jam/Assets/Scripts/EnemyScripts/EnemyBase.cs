@@ -153,7 +153,7 @@ public class EnemyBase : MonoBehaviour, ICombatEntity
     public virtual void Attack1(string attackCall)
     {
         //TODO: this won't work I'll need to fire on connection with player so on trigger entered and then call the attack timer, but let's test this first
-        //Debug.Log("Attacking player");
+        Debug.Log("Attacking player");
         if (_playerObject != null)
         {
             PlayerController pController = _playerObject.GetComponent<PlayerController>();

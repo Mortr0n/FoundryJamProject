@@ -8,40 +8,48 @@ public abstract class Weapon : MonoBehaviour
     private GameObject _target;
     private float _damageAdd = 10f;
     private float _coolDown = 1f;
-    protected float _range = 25f;
+    protected float _range = 10f;
     private bool _isRanged = true;
-    private bool _isEquipped = false;
+    private bool _isEquipped = true;
     protected float Range { get { return _range; } set { _range = value; } }
 
     private void Start()
     {
+        Debug.Log("Starting AutoAttack Coroutine");
         StartCoroutine(AutoAttack());
     }
 
     protected virtual ProjectileBase RangedAttack()
     {
-        ProjectileBase projectile = Instantiate(_attackPrefab, _firePoint.position, Quaternion.identity).GetComponent<ProjectileBase>();
-        
+        ProjectileBase projectile = new ProjectileBase();
         _target = GetTarget(TargetType.Closest);
-        projectile.SetTarget(_target);
-        Debug.Log($"projectile: {projectile} and Target: {_target}");
+        if (_target != null)
+        {
+           projectile = Instantiate(_attackPrefab, _firePoint.position, Quaternion.identity).GetComponent<ProjectileBase>();
+
+
+            projectile.SetTarget(_target);
+            Debug.Log($"projectile: {projectile} and Target: {_target}");
+        }
+
         return projectile;
     }
    
 
     protected virtual IEnumerator  AutoAttack()
     {
+        Debug.Log($"Auto Attack inside {_isEquipped}");
         while (_isEquipped)
         {
-            //Debug.Log("Auto Attacking");
+            Debug.Log("Auto Attacking");
             if (_isRanged)
             {
                 ProjectileBase thisProjectile = RangedAttack();
-                //Debug.Log($"thisProjectile: {thisProjectile}");
+                Debug.Log($"thisProjectile: {thisProjectile}");
             }
             yield return new WaitForSeconds(_coolDown);
         
-            //Debug.Log("Renewing AutoAttack");
+            Debug.Log("Renewing AutoAttack");
             AutoAttack();
          }
     }
@@ -49,7 +57,7 @@ public abstract class Weapon : MonoBehaviour
     public void Equip()
     {
         _isEquipped = true;
-        //Debug.Log($"Is it equipped? {_isEquipped}");
+        Debug.Log($"Is it equipped? {_isEquipped}");
     }
 
 
@@ -180,7 +188,7 @@ public abstract class Weapon : MonoBehaviour
                 Debug.LogWarning("null target in overlapcircle");
                 continue;
             }
-            //Debug.Log($"Target: {target.gameObject}");
+            Debug.Log($"Target: {target.gameObject}");
 
             if (target.CompareTag("Enemy"))
             {
